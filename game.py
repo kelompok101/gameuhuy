@@ -213,17 +213,17 @@ elif selected == "Perhitungan":
             st.warning("Kadar protein dalam produk ini kurang dari batas bawah kebutuhan harian Anda.")
         elif kadar_protein > kebutuhan_protein_atas:
             st.warning("Kadar protein dalam produk ini melebihi batas atas kebutuhan harian Anda.")
-    
+
     # Membuat data untuk grafik
     kategori_protein = ['Kadar Protein', 'Kebutuhan Harian']
     jumlah_protein = [kadar_protein, kebutuhan_protein_atas]
-    
+
     # Membuat grafik batang
     fig = go.Figure(data=[go.Bar(x=kategori_protein, y=jumlah_protein, marker_color=['blue', 'green'])])
-    
+
     # Menambahkan label dan judul
     fig.update_layout(title='Kadar Protein dalam Produk dan Kebutuhan Harian', yaxis_title='Jumlah (gram)')
-    
+
     # Menampilkan grafik
     st.plotly_chart(fig)
 
