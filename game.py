@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
+import plotly.graph_objects as go
 
 # Menu sidebar
 selected = st.sidebar.radio("Menu",["Perkenalan Kelompok", "Pengetahuan", "Perhitungan", "Rekomendasi Makanan", "Tabel Protein"])
@@ -214,30 +213,19 @@ elif selected == "Perhitungan":
             st.warning("Kadar protein dalam produk ini kurang dari batas bawah kebutuhan harian Anda.")
         elif kadar_protein > kebutuhan_protein_atas:
             st.warning("Kadar protein dalam produk ini melebihi batas atas kebutuhan harian Anda.")
-
-# Membuat data untuk grafik
+    
+    # Membuat data untuk grafik
     kategori_protein = ['Kadar Protein', 'Kebutuhan Harian']
     jumlah_protein = [kadar_protein, kebutuhan_protein_atas]
-
-# Membuat grafik
-    fig, ax = plt.subplots()
-    bars = ax.bar(kategori_protein, jumlah_protein, color=['blue', 'green'])
-
-# Menambahkan label dan judul
-    ax.set_ylabel('Jumlah (gram)')
-    ax.set_title('Kadar Protein dalam Produk dan Kebutuhan Harian')
-
-# Menambahkan nilai di atas setiap bar
-    for bar in bars:
-        height = bar.get_height()
-        ax.annotate(f'{height:.1f}',
-                    xy=(bar.get_x() + bar.get_width() / 2, height),
-                    xytext=(0, 3),
-                    textcoords="offset points",
-                    ha='center', va='bottom')
-
-# Menampilkan grafik
-    st.pyplot(fig)
+    
+    # Membuat grafik batang
+    fig = go.Figure(data=[go.Bar(x=kategori_protein, y=jumlah_protein, marker_color=['blue', 'green'])])
+    
+    # Menambahkan label dan judul
+    fig.update_layout(title='Kadar Protein dalam Produk dan Kebutuhan Harian', yaxis_title='Jumlah (gram)')
+    
+    # Menampilkan grafik
+    st.plotly_chart(fig)
 
 # Halaman Opsi Makanan
 elif selected == "Rekomendasi Makanan":
